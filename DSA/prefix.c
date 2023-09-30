@@ -67,8 +67,7 @@ int main()
 			continue;
 		if(!isOperator(pre[i]))
 		{
-			push(pre[i]-48); // To convert ACSII value of digits to it's actual value. For example 50-48 = 2, here 50 is ASCII of '2'.
-		}
+			push(pre[i]-48); 		}
 		else
 		{
 			a = pop();
