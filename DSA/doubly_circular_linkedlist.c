@@ -10,7 +10,6 @@ void insert_at_begin(int );
 void insert_at_end(int );
 void insert_at_any(int ,int);
 void display();
-int count();
 void delete_at_begin();
 void delete_at_any_pos(int );
 void delete_at_end();
@@ -74,10 +73,8 @@ int main()
 void insert_at_begin(int el)
 {
 	struct node *new;
-	start = tail->next;
 	new = (struct node*)malloc(sizeof(struct node));
 	new->data = el;
-
 	if(start == NULL)
 	{
 		start = tail = new;
@@ -165,5 +162,86 @@ void display()
 			temp = temp->next;
 		}
 		printf("%d",temp->data);
+	}
+}
+void delete_at_begin()
+{
+	struct node *temp;
+	temp = start;
+	if(temp == NULL)
+	{
+		printf("list is empty");
+	}
+	else if(start->next == start)
+	{
+		start = tail = NULL;
+		free(temp);
+	}
+	else
+	{
+		start = start->next;
+		start->prev = tail;
+		tail->next = start;
+		free(temp);
+	}
+}
+void delete_at_end()
+{
+	struct node *temp;
+	temp = tail;
+	if(temp == NULL)
+	{
+		printf("list is empty");
+	}
+	else if(start->next == start)
+	{
+		start = tail = NULL;
+		free(temp);
+	}
+	else
+	{
+		tail = tail->prev;
+		tail->next = start;
+		start->prev = tail;
+		free(temp);
+	}
+}
+void delete_at_any_pos(int pos)
+{
+	if(pos==0)
+		printf("invalid position");
+	else if(pos==1)
+		delete_at_begin();
+	else 
+	{
+		struct node  *temp,*t,*l;
+		temp = (struct node*)malloc(sizeof(struct node));
+		int i=1;
+		l = start;	
+		temp=start;
+		while(i<pos && l!=NULL)
+		{
+			temp=temp->next;
+			l = l->next;
+			i++;
+		}
+		if(l==NULL)
+		{
+			printf("Invalid position");
+		}
+		else
+		{
+			temp->prev->next = temp->next;
+			temp->next->prev = temp->prev;
+			if(temp->next == start)
+			{
+					tail = temp->prev;
+					free(temp);
+			}
+			else
+			{
+				free(temp);
+			}
+		}
 	}
 }
