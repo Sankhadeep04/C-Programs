@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define MAX 5
 struct node
 {
 	int data;
@@ -7,80 +8,128 @@ struct node
 	struct node *right;
 };
 struct node *root=NULL;
-struct node *insert(struct node *tree,long el);
-int ciel(struct node *tree,int key);
-int count = 1;
+int queue[MAX],start=-1,end=-1;
+void insert();
+void deletee();
+void display();
+int isEmpty();
+int isFull();
+void bfs();
+int size(int l);
 int main()
 {
-	int ch,el,pos;
-	printf("Enter 1 to insert a node in the binary search tree \n\n");
-	printf("Enter 2 to find the ciel of a element in bst\n\n");
+	int a;
+	printf("enter 1 to insert element \n");
+	printf("enter 2 to delete element \n");
+	printf("enter 3 to display\n");
+	printf("enter 4 to exit\n");
+
 	while(1)
 	{
-		printf("Enter your choice:");
-		scanf("%d",&ch);
-		switch(ch)
+		printf("\nenter a number : ");
+		scanf("%d",&a);
+		switch(a)
 		{
 			case 1:
-				printf("Enter an element : To quit enter 0 :\n");
-				scanf("%d",&el);
-				while(el!=0)
-				{
-					root=insert(root,el);
-					scanf("%d",&el);
-				}
+				insert();
 				break;
 			case 2:
-				printf("Enter an element :\n");
-				scanf("%d",&el);
-				int n=ciel(root,el);
-				printf("Ceil of the element is:%d\n",n);
+				deletee();
+				break;
+			case 3:
+				();
 				break;
 			default:
-				printf("Invalid Choice\n");
+				printf("invalid choice \n");
+				
+				
 		}
 	}
-} 
-struct node *insert(struct node *tree,long el)
+}
+int isEmpty()
 {
-	if(tree==NULL)
+	return top==-1;
+}
+int isFull()
+{
+	return top==Max-1;
+}
+void insert()
+{
+	int element;
+	if(end==MAX-1)
 	{
-		tree=(struct node *)malloc(sizeof(struct node));
-		tree->left=tree->right=NULL;
-		tree->data=el;
-		count++;
+//		printf("queue is full \n");
+
+	}
+	else
+   	{
+//   		printf("enter the element to insert : ");
+//   		scanf("%d",&element);
+   		if((start==-1) && (end==-1))
+	   	{
+		   	start=0;  
+	        end=0;  
+	        queue[end]=element;  
+	    } 
+	    else  
+	    {  
+	        end++;
+	        queue[end]=element;
+	    }  
+	}
+}
+void deletee()
+{
+	if(start==-1 && end == -1)
+	{
+//		printf("queue is empty \n");
+	}
+	else if(start==end)
+	{
+//		printf("the deleted element from queue is : %d",queue[start]);
+		start =-1;
+		end=-1;
 	}
 	else
 	{
-		if(count%2==0)
-		{
-			tree->left=insert(tree->left,el);
-		}
-		else
-		{
-			tree->right=insert(tree->right,el);
-		}
+//		printf("the deleted element from queue is : %d",queue[start]);
+		start++;
 	}
-	return(tree);
 }
-
-int ciel(struct node *root,int key)
+void bfs()
 {
-	int c=-1;
-	while(root!=NULL)
+	if(node->left != NULL)
 	{
-		if(root->data==key)
+		insert(node->left);
+	}
+	if(node->right != NULL)
+	{
+		insert(node->right);
+	}
+	if(root != NULL)
+	{
+		insert(root);
+	}
+	while(size(temp) != 0)
+	{
+		S = size(temp);
+		for(i=1 ; i<=S;i++)
 		{
-			return key;
-		}
-		if(root->data>key)
-		{
-			c=root->data;
-			root=root->left;
-		}
-		else
-		{
-			root=root->right;
+			if(node->left != NULL)
+			{
+				insert(node->left);
+			}
+			if(node->right != NULL)
+			{
+				insert(node->right);
+			}
+			printf("%d",node->data);
+			deletee(node);
 		}
 	}
+}
+int size(int s)
+{
+	
 }

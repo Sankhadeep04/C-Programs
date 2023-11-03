@@ -8,16 +8,15 @@ struct node
 };
 struct node *root=NULL;
 struct node *insert(struct node *tree,int el);
-struct node *bst_search(struct node *p,int key);
-struct node	*bst_search_iterative(struct node *root,int key);
+struct node *bst_search(struct node *p,long key);
+struct node *bst_search_iterative(struct node *root,long key);
 int count = 1;
 int main()
 {
-	int ch,el,pos,key;
+	int ch,el,pos;
 	printf("Enter 1 to insert a node in the binary search tree \n\n");
 	printf("Enter 2 to perform bst search\n\n");
 	printf("Enter 3 to perform iterative bst search\n\n");
-	printf("Enter 4 to search ceiling of a node \n");
 	while(1)
 	{
 		printf("Enter your choice:");
@@ -64,25 +63,31 @@ int main()
 		}
 	}
 } 
-struct node *insert(struct node *tree,int el)
+struct node *createNode(int data) 
 {
-	if(tree==NULL)
-	{
-		tree=(struct node *)malloc(sizeof(struct node));
-		tree->left=tree->right=NULL;
-		tree->data=el;
-		count++;
-	}
-	else
-	{
-		if (el < root->data)
-        	root->left  = insert(root->left, el);
-   		else if (el > root->data)
-        	root->right = insert(root->right, el);
-	}
-	return(root);
+    struct node* new=(struct node*)malloc(sizeof(struct node));
+    new->data=data;
+    new->left=new->right=NULL;
+    return new;
 }
-struct node *bst_search(struct node *root,int key)
+struct node *insert(struct node *root,int data)
+{
+    if (root==NULL)
+	{
+        return createNode(data);
+    }
+    if(data<root->data)
+	{
+        root->left=insert(root->left,data);
+    }
+	else if(data>root->data) 
+	{
+        root->right=insert(root->right,data);
+    }
+    return root;
+}
+
+struct node* bst_search(struct node *root,long key)
 {
 		if(root==NULL || root->data==key)
 		{
@@ -98,7 +103,7 @@ struct node *bst_search(struct node *root,int key)
 		}
 		
 }
-struct node *bst_search_iterative(struct node *root,int key)
+struct node *bst_search_iterative(struct node *root,long key)
 {
 	while(root!=NULL)
 	{
@@ -117,4 +122,3 @@ struct node *bst_search_iterative(struct node *root,int key)
 	}
 	return root;
 }
-

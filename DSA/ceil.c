@@ -7,9 +7,10 @@ struct node
 	struct node *right;
 };
 struct node *root=NULL;
-struct node *insert(struct node *tree,long el);
+struct node *new=NULL;
+struct node	*createNode(int data);
+struct node *insert(struct node *tree,int el);
 int ciel(struct node *tree,int key);
-int count = 1;
 int main()
 {
 	int ch,el,pos;
@@ -40,39 +41,46 @@ int main()
 				printf("Invalid Choice\n");
 		}
 	}
-} 
-struct node *insert(struct node *tree,long el)
+}
+struct node *createNode(int data) 
 {
-	if(tree==NULL)
+    struct node* new=(struct node*)malloc(sizeof(struct node));
+    new->data=data;
+    new->left=new->right=NULL;
+    return new;
+}
+struct node *insert(struct node *root,int data)
+{
+    if (root==NULL)
 	{
-		tree=(struct node *)malloc(sizeof(struct node));
-		tree->left=tree->right=NULL;
-		tree->data=el;
-		count++;
-	}
-	else
+        return createNode(data);
+    }
+
+    if(data<root->data)
 	{
-		if (el < root->data)
-        	root->left  = insert(root->left, el);
-   		else if (el > root->data)
-        	root->right = insert(root->right, el);
-	}
-	return(root);
+        root->left=insert(root->left,data);
+    }
+	else if(data>root->data) 
+	{
+        root->right=insert(root->right,data);
+    }
+    return root;
 }
 
 int ciel(struct node *root,int key)
 {
 	int c=-1;
-	while(root != NULL)
+	while(root!=NULL)
 	{
 		if(root->data==key)
 		{
 			return key;
 		}
-		else if(root->data>key)
+		if(root->data>key)
 		{
 			c=root->data;
 			root=root->left;
+			
 		}
 		else
 		{
