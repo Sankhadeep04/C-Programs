@@ -6,10 +6,10 @@ struct node
 	struct node *left;
 	struct node *right;
 };
-struct node	*createnode(int data);
-struct node *insert(struct node *tree,int el);
 struct node *root=NULL;
 struct node *new=NULL;
+struct node	*createNode(int data);
+struct node *insert(struct node *tree,int el);
 int ciel(struct node *tree,int key);
 int main()
 {
@@ -25,7 +25,7 @@ int main()
 			case 1:
 				printf("Enter an element : To quit enter 0 :\n");
 				scanf("%d",&el);
-				while(el != 0)
+				while(el!=0)
 				{
 					root=insert(root,el);
 					scanf("%d",&el);
@@ -34,7 +34,7 @@ int main()
 			case 2:
 				printf("Enter an element :\n");
 				scanf("%d",&el);
-				int n = ciel(root,el);
+				int n=ciel(root,el);
 				printf("Ceil of the element is:%d\n",n);
 				break;
 			default:
@@ -42,25 +42,31 @@ int main()
 		}
 	}
 }
-
+struct node *createNode(int data) 
+{
+    struct node* new=(struct node*)malloc(sizeof(struct node));
+    new->data=data;
+    new->left=new->right=NULL;
+    return new;
+}
 struct node *insert(struct node *root,int data)
 {
     if (root==NULL)
 	{
-        struct node* new=(struct node*)malloc(sizeof(struct node));
-	    new->data=data;
-	    new->left=new->right=NULL;    
-	}
-    else if(data < root->data)
+        return createNode(data);
+    }
+
+    if(data<root->data)
 	{
         root->left=insert(root->left,data);
     }
-	else if(data > root->data) 
+	else if(data>root->data) 
 	{
         root->right=insert(root->right,data);
     }
     return root;
 }
+
 int ciel(struct node *root,int key)
 {
 	int c=-1;
@@ -83,4 +89,3 @@ int ciel(struct node *root,int key)
 	}
 	return c;
 }
-
