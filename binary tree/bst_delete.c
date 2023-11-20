@@ -50,7 +50,7 @@ int main()
 			case 3:
 				printf("Enter the element you want to delete : ");
 				scanf("%d",&el);
-				delete(root,el);
+				root = delete(root,el);
 				break;
 			case 4:
 				printf("Preorder traversing TREE\n");
@@ -117,7 +117,11 @@ struct node *delete_c(struct node *root,int el)
 }
 struct node *delete(struct node *root,int el)
 {
-	if(root->data == el)
+	if(root == NULL)
+	{
+		return NULL;
+	}
+	else if(root->data == el)
 	{
 		root = delete_c(root,el);
 	}
@@ -125,7 +129,7 @@ struct node *delete(struct node *root,int el)
 	{
 		root->right = delete_c(root->right,el);
 	}
-	else if(root->left->data == el)
+	else if(root->left != NULL && root->left->data == el)
 	{
 		root->left = delete_c(root->left,el);
 	}
